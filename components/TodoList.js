@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { StyleSheet, View, TextInput, Button, Text, FlatList, Switch } from 'react-native';
+import * as Progress from 'react-native-progress';
 
 import todoData from '../Helpers/todoData';
 import TodoItem from './TodoItem';
@@ -7,6 +8,7 @@ import TodoItem from './TodoItem';
 export default function TodoList({navigation: { goBack }}){
     const [count,setCount] = useState(todoData.filter((item)=>item.done).length);
     const [todos,setTodos] = useState(todoData);
+    const [countGlobal,setCountGlobal] = useState(todos.length)
     
     const [newTodoText,setNewTodoText] = useState("")
     const [showDoneItems,setShowDoneItems] = useState(false)
@@ -32,13 +34,14 @@ export default function TodoList({navigation: { goBack }}){
     
     const checkNone = () =>{
         setTodos(todos.map(item => {return {id: item.id, content: item.content, done: false }}))
-        setCount(todos.length)
+        setCount(0)
     }
     
     const deleteTodo = (id) => {
         const newTodos = todos.filter(item => item.id !== id)
         setTodos(newTodos)
         setCount(newTodos.filter(item=>item.done).length)
+        setCountGlobal(todos.length)
     }
     
     const addNewTodo = () =>{
@@ -46,6 +49,7 @@ export default function TodoList({navigation: { goBack }}){
         setTodos([...todos, { id:  Math.max(...todos.map(item => item.id)) + 1, content: newTodoText, done: false }])
         setNewTodoText("")
         setCount(todos.filter(item=>item.done).length)
+        setCountGlobal(todos.length)
     }
     
     
@@ -56,7 +60,10 @@ export default function TodoList({navigation: { goBack }}){
             <FlatList
                 style={{ paddingLeft: 10 }}
                 data={todos}
-                renderItem={({item}) => <TodoItem updateCount={updateCount}  todosNotDone = {showNotDoneItems} todosDone={showDoneItems} item={item} deleteTodo={deleteTodo} />}/>
+                renderItem={({item}) => <TodoItem updateCount={updateCount}  todosNotDone = {showNotDoneItems} todosDone={showDoneItems} item={item} deleteTodo={deleteTodo} />}
+            />
+            <Progress.Bar progress={count/countGlobal} width={1000} hight={20}/>
+           
             <View style={styles.button_container}>
                 <Button
                     title='checkAll'

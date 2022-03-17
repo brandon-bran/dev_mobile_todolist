@@ -21,8 +21,6 @@ export default function TodoLists ({ navigation, route }) {
             <Input/>
         </View>
     )
-    
-    
 }
 
 /*const styles = StyleSheet.create({

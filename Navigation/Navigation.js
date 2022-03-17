@@ -22,7 +22,8 @@ export default function Navigation () {
                             <Tab.Screen name='SignIn' component={SignInScreen} />
                             <Tab.Screen name='SignUp' component={SignUpScreen} />
                         </Tab.Navigator>
-                    ) : (
+                    ) :
+                        (
                         <Tab.Navigator>
                             <Tab.Screen name='Home' component={HomeScreen} />
                             <Tab.Screen name='TodoLists' component={TodoListsScreen} />
