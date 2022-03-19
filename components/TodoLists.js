@@ -8,10 +8,21 @@ export default function TodoLists ({ navigation, route }) {
     
     const [username, setUsername] = useContext(UsernameContext);
     const [token, setToken] = useContext(TokenContext);
-    const [data, setData] = useState([]);
-    console.log("la data ici "+JSON.stringify(data,null,2))
-    useEffect( () => {getTaskListsByUsername(username, token).then(r => {setData(r.taskLists); console.log(r.taskLists)})}, []);
+    const [data, setData] = useState();
+   
+    //useEffect( () => {getTaskListsByUsername(username, token).then(r => {setData(r.taskLists); console.log(r.taskLists)})}, []);
     
+    const showTodo = () =>{
+        getTaskListsByUsername(username,token)
+        .then(result => setData(result))
+
+    }
+
+    useEffect(()=>{
+        showTodo()
+    },[data])
+    
+
     return (
         <View>
             <FlatList

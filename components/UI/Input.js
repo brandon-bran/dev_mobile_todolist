@@ -19,6 +19,7 @@ export default function Input(props) {
             <Button
                 onPress={ () =>
                     createTaskLists(username, token, text)
+                    /*
                         .then(token => {
                             setToken(token)
                             setUsername(username)
@@ -26,6 +27,7 @@ export default function Input(props) {
                         .catch(err => {
                             setError(err)
                         })
+                        */
                 }
                 title="Create"
             />

@@ -143,7 +143,7 @@ export function getTaskListsByUsername (username, token) {
             if (jsonResponse.errors != null){
                 throw(jsonResponse.errors[0].message)
             }
-            return jsonResponse.data
+            return jsonResponse.data.taskLists
         })
         .catch(error => {
             throw error
@@ -172,7 +172,7 @@ export function createTaskLists (username, token, title) {
             if (jsonResponse.errors != null){
                 throw(jsonResponse.errors[0].message)
             }
-            return jsonResponse.data
+            return jsonResponse.data.taskLists
         })
         .catch(error => {
             throw error
