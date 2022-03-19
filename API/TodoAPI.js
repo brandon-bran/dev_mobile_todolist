@@ -32,6 +32,40 @@ const CREATE_TASKLIST =
     '    }\n' +
     '  }'
 
+
+    const DELETE_TASK_LIST =
+    'mutation($id:ID){\n'+
+   '     deleteTaskLists(where:{id:$id}){nodesDeleted}\n'+
+  '    }'
+
+export function deleteTaskLists (id,token) {
+    return fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+            query: DELETE_TASK_LIST,
+            variables: {
+                id:id
+            }
+        })
+    })
+        .then(response => {
+            return response.json()
+        })
+        .then(jsonResponse => {
+            if (jsonResponse.errors != null){
+                throw(jsonResponse.errors[0].message)
+            }
+            return jsonResponse.data
+        })
+        .catch(error => {
+            throw error
+        })
+}
+
 export function signIn (username, password) {
     return fetch(API_URL, {
         method: 'POST',
